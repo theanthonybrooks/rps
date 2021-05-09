@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ULTIMATE Rock Paper Scissors</title>
 </head>
 <body>
     <script>
 
-        //scorekeeping
-        let playerScore = 0;
-        let computerScore = 0;
+       
 
 
         //creates function *****WORKS******
@@ -23,26 +21,58 @@
             return choices[Math.floor(Math.random() * choices.length)];
             
         }
-
-
+        //display initial random computer choice in console to test functionality
         console.log(computerPlay());
-        //Inputs the player's choice with lowercase regardless of input ******WORKS******
-        function player() {
-            //player choice
-            let playerChoice;
-            playerChoice = prompt('Please enter rock, paper, or scissors:');
-            return playerChoice;
-    }
 
-        console.log((player().toLowerCase()) + `: this is just a test`);
-        function game() { 
+        //create global variables
+        let computerSelection;
+        let playerSelection;
+        let computerScore;
+        let playerScore;
+
+        game();
+        //create function and run for 5 rounds
+        function game () {
+                computerScore=0;
+                playerScore=0;
+                for (let i=0; i<5; i++) {
+                onUserInput();
+            }
+        console.log(declareWinner());
+        //tally score at end of the game and display alert
+        function declareWinner() {
+                if (playerScore===computerScore) {
+                    alert(`TIE GAME! Humanity lives to see another day! \n\nPlayer: ${playerScore} \n    vs \nComputer: ${computerScore}`);
+                    return playerScore + '-' + computerScore + '\nTie game!';
+                } else if (playerScore>computerScore) {
+                    alert(`YOU WON! Humanity has triumphed thanks to this trivial game!\n \n\nPlayer: ${playerScore} \n     vs \nComputer: ${computerScore}`);
+                    return playerScore + '-' + computerScore + '\nWinner winner, chicken dinner!!';
+                } else {
+                    alert(`YOU LOST! \n Humanity has lost. How could this happen? \n\nPlayer: ${playerScore} \n    vs \nComputer: ${computerScore}`);
+                    return playerScore + '-' + computerScore + '\nLoser. Times truly are a-changing!';
+                }
+                }
+            }
+        //Inputs the player's choice with lowercase regardless of input ******WORKS******
+        function onUserInput() {
+            playerSelection = prompt('Are you prepared to represent humanity in the ultimate fight against the computers? Choose wisely. \n\nRock, Paper, or Scissors?', '');
+                if ((playerSelection.toLowerCase()=='rock')
+                    ||(playerSelection.toLowerCase()=='paper')
+                    ||(playerSelection.toLowerCase()=='scissors')) {
+                    console.log(playRound(playerSelection,computerSelection));
+                } else {
+                alert('Choose again, sucka.');
+                onUserInput();
+                }
+            }
+                    
 
         //creates function to play round
         function playRound(playerSelection, computerSelection) {
             
             //assign selections
             computerSelection = computerPlay();
-            playerSelection = player().toLowerCase();
+            playerSelection = playerSelection.toLowerCase();
         
             //rock > scissors
             //paper > rock
@@ -50,19 +80,22 @@
 
             //tie round
             if (computerSelection === playerSelection) {
+                alert ('Tie Round! No points added.');
                 return 'Tie Round. No points added.'; 
-                //rock (computer) vs user
             }
+            //rock (computer) vs user
             else if (computerSelection === 'rock') {
                 //player chooses scissors
                 if (playerSelection === 'scissors') {
                     //add to score
                     ++computerScore;
-                    return `You Lose! Rock beats ${playerSelection}`;
+                    alert (`You got smashed! \nRock beats ${playerSelection}`);
+                    return `You got smashed! Rock beats ${playerSelection}`;
                 } else {
                     //if not a tie, and not scissors, then default to paper
                     ++playerScore;
-                    return `You Win! Paper beats ${computerSelection}`;
+                    alert (`You smothered that rock! \nPaper beats ${computerSelection}`);
+                    return `You smothered that rock! Paper beats ${computerSelection}`;
                 }
                     }
             //paper (comp) vs user
@@ -71,10 +104,12 @@
                 if (playerSelection === 'rock') {
                     //add to score
                     ++computerScore;
-                    return `You Lose! Paper beats ${playerSelection}`;
+                    alert (`You got smothered! \nPaper beats ${playerSelection}`);
+                    return `You got smothered! Paper beats ${playerSelection}`;
                 } else {
                     //if not a tie, and not rock, then default to scissors
                     ++playerScore;
+                    alert (`You slicked and diced! \nScissors beats ${computerSelection}`);
                     return `You Win! Scissors beats ${computerSelection}`;
                 }
                 }
@@ -84,38 +119,18 @@
                 if (playerSelection === 'paper') {
                     //add to score
                     ++computerScore;
+                    alert (`You got slicked and diced! \nScissors beats ${playerSelection}`);
                     return `You Lose! Scissors beats ${playerSelection}`;
                 } else {
                     //if not a tie, and not paper, then default to rock
                     ++playerScore;
+                    alert (`You smashed them! \nRock beats ${computerSelection}`);
                     return `You Win! Rock beats ${computerSelection}`;
                 }
                 }
+                
             }
-
-
-                //loops and plays 5 rounds
-                for (let i=0; i < 5; i++) {
-            
-
-                   console.log(playRound(playerSelection, computerSelection));
-                   return (`Player: ${playerScore} of 5. || Computer: ${computerScore} of 5.`)
-
-                }
-
-                //tallying score at the end
-                if (playerScore > computerScore) {
-                    console.log(`You win! ${playerScore} : ${computerScore}`)
-                }
-                else if (playerScore === computerScore) {
-                    console.log(`Tie Game! ${playerScore} : ${computerScore}`)
-                }
-                else {
-                    console.log(`You lost! ${playerScore} : ${computerScore}`)
-                }
-            }
-            game();
-        
+                   
         
     </script>
 </body>
